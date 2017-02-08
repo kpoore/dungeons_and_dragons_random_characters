@@ -10,33 +10,6 @@ Created on Thu Feb  2 11:07:21 2017
 """
 import random
 
-class Character(object):
-    '''
-    A character object that is generated to create a D&D based character.
-    '''
-    def __init__(self, name):
-        
-        self.name = name
-        print "Hi"
-        
-    
-    def set_level(self, level=1):
-        '''
-        Set character level
-        '''
-        self.level = level
-        
-        
-    def race(self):
-        '''
-        Use the race generator then set race.
-        '''
-        race, gender_prob, age_prob, height_prob, weight_prob = generate_race()
-        print race
-        
-        self.race = race
-        
-        
         
 def generate_race():
     possible_races = {'Human':[[0, 66/400.], [0.47, 0.47, 0.06], [18, 100],
@@ -87,9 +60,43 @@ def generate_race():
         if possible_races[key][0][0] <= rand_num <= possible_races[key][0][1]:
             race = possible_races[key]
             race_name = key
-    print race
     return race_name, race[1], race[2], race[3], race[4]
+   
+    
+def set_age(age_prob):
+    return random.randint(age_prob[0], age_prob[1])
+    
+    
+def set_height(height_prob):
+    return random.randint(height_prob[0], height_prob[1])
+    
+
+def set_weight(weight_prob):
+    return random.randint(weight_prob[0], weight_prob[1])
+
+
+def set_gender(gender_prob):
+    rand_num = random.random()
+    if 0.0 <= rand_num <= gender_prob[0]:
+        return 'male'
+    elif gender_prob[0] <= rand_num <= gender_prob[0] + gender_prob[1]:
+        return 'female'
+    else:
+        return 'neutral'
+
+
+#def set_class():
+#
+#
+#    return char_class        
 
 if __name__ == '__main__':
-    Keith = Character('Keith')
-    print Keith.race()
+    race_name, p_gender, p_age, p_height, p_weight = generate_race()
+    char_race = race_name
+    char_age = set_age(p_age)
+    char_weight = set_age(p_weight)
+    char_height = set_height(p_height)
+    char_gender = set_gender(p_gender)
+    
+    print "Your character is a {} year old {}. Your character is {}, weighing {} and is {} inches tall".format(
+            char_age, char_race, char_gender, char_weight, char_height)
